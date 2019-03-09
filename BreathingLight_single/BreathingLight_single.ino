@@ -14,18 +14,35 @@
 #include "LED_Mode.h"
 
 #define PIN 6
+#define Sensor 7
 
 #define LED_AMOUNT 16
 
+int SensorRead = 1;
 LED_Mode st = LED_Mode(PIN,LED_AMOUNT, 0);
 
 void setup()
 {
   Serial.begin(9600);
+  pinMode(Sensor, INPUT);
+  st.set_wait(70);      //arduino_1 & 3
+  //st.set_wait(90);    //arduino_2
 }
 
 void loop()
 {
+  SensorRead = digitalRead(Sensor); 
+  if(SensorRead==1){
+    st.set_mode(1);        //arduino_1
+    //st.set_mode(2);      //arduino_2
+    //st.set_mode(3);      //arduino_3
+  }
+  else{
+    st.set_mode(0);
+  }
+
+//Serial Multi-mode
+/***********************************
   if(Serial.available())
   {
     char val = Serial.read();
@@ -49,6 +66,7 @@ void loop()
       st.set_mode(0);
     }   
   }
+***********************************/
   st.run();
   delay(1);
 }
