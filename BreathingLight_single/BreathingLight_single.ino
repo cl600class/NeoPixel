@@ -15,6 +15,7 @@
 
 #define PIN 6
 #define Sensor 7
+#define Sensor_PW 2    //connect via Pin 2 or 3.3V pin
 
 #define LED_AMOUNT 16
 
@@ -25,13 +26,15 @@ void setup()
 {
   Serial.begin(9600);
   pinMode(Sensor, INPUT);
+  pinMode(Sensor_PW, OUTPUT);
+  digitalWrite(Sensor_PW, HIGH);
   st.set_wait(70);      //arduino_1 & 3
   //st.set_wait(90);    //arduino_2
 }
 
 void loop()
 {
-  SensorRead = digitalRead(Sensor); 
+  SensorRead = digitalRead(Sensor);
   if(SensorRead==1){
     st.set_mode(1);        //arduino_1
     //st.set_mode(2);      //arduino_2
